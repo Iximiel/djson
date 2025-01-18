@@ -19,7 +19,7 @@ if(NOT TARGET DJSON::DJSON)
 endif()
 
 # These tests can use the Catch2-provided main
-add_executable(tests test_object.cpp test_array.cpp)
+add_executable(tests test_object.cpp test_array.cpp test_utils.cpp)
 target_link_libraries(
   tests
   PRIVATE Catch2::Catch2WithMain
