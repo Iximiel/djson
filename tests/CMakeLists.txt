@@ -1,8 +1,32 @@
-# (c) 2024 Daniele Rapetti
+# (c) 2025 Daniele Rapetti
 #
 # This code is licensed under MIT license (see LICENSE for details)
-find_package(Catch2 3 REQUIRED)
+
+# enable FetchContent to get Catch2
+include(FetchContent)
+
+# declare Catch2
+FetchContent_Declare(
+  Catch2 # name of the content
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git # the repository
+  GIT_TAG v3.8.0)
+
+# make available
+FetchContent_MakeAvailable(Catch2)
+
+if(NOT TARGET DJSON::DJSON)
+  find_package(DJSON REQUIRED)
+endif()
 
 # These tests can use the Catch2-provided main
 add_executable(tests test_json.cpp)
-target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(
+  tests
+  PRIVATE Catch2::Catch2WithMain
+  PUBLIC DJSON::DJSON)
+
+enable_testing()
+
+include(CTest)
+include(Catch)
+catch_discover_tests(tests)

@@ -1,33 +1,34 @@
-//(c) 2024 Daniele Rapetti
+//(c) 2025 Daniele Rapetti
 // This code is licensed under MIT license (see LICENSE for details)
 
-/* Plan
- - Number
- - String
- - Boolean
- - Array
- - Object
- - null
- */
+#ifndef DJSON_JSON
+#define DJSON_JSON
 #include <map>
 #include <string>
+#include <string_view>
 #include <variant>
 #include <vector>
 
-namespace json {
+namespace djson {
   using Number = double;
   using String = std::string;
   using Boolean = bool;
   struct Null {};
   struct Array;
-  struct Object;
+  class Object;
   using Node = std::variant<Number, String, Boolean, Null, Array, Object>;
   struct Array {
     std::vector<Node> list;
   };
-  struct Object {
-    std::vector<std::string> orederedkeys;
-    std::map<std::string, Node> objects;
-  };
+  class Object {
+    std::vector<std::string> orderedKeys{};
+    std::map<std::string, Node, std::less<>> objects{};
 
-} // namespace json
+  public:
+    Node &operator[] (const std::string &key);
+    Node &at (const std::string &key);
+  };
+  //   void operator= (std::ostream &os, const Node &node);
+
+} // namespace djson
+#endif // DJSON_JSON
