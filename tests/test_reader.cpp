@@ -6,10 +6,13 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <sstream>
+
 TEST_CASE ("Reading an Object", "[read]") {
-  std::stringstream ss (
-    "\t\r\n "
-    R"(  {"num":1, "bool":false ,"string":"hello","thenull":null,
+  std::stringstream ss ("\t\r\n "
+                        R"(  {"num":1, "bool":false ,"string"
+    :"hello",
+    "thenull":
+    null,
     "actuallyastring":"true" }
     )");
   auto x = djson::read (ss);
@@ -19,6 +22,19 @@ TEST_CASE ("Reading an Object", "[read]") {
   REQUIRE (std::get<djson::String> (x->at ("string")) == "hello");
   REQUIRE (std::get<djson::Null> (x->at ("thenull")) == djson::Null{});
   REQUIRE (std::get<djson::String> (x->at ("actuallyastring")) == "true");
+}
+
+TEST_CASE ("Reading an Object with spaces", "[read]") {
+  std::stringstream ss (
+    R"(  {"key with spaces" : "yes",
+    "str with spaces" : "a b c "
+    }
+    )");
+  auto x = djson::read (ss);
+  REQUIRE (x.has_value ());
+
+  REQUIRE (std::get<djson::String> (x->at ("key with spaces")) == "yes");
+  REQUIRE (std::get<djson::String> (x->at ("str with spaces")) == "a b c ");
 }
 
 TEST_CASE ("Reading an Object within an object", "[read]") {
@@ -43,7 +59,9 @@ TEST_CASE ("Reading an Array within an object", "[read]") {
   std::stringstream ss (
 
     R"(  {"arr":[false, "ciao" ,
-    null ,3, {"in":"side"}]})");
+    null ,3, {
+        "in":"side"
+        }]})");
   auto x = djson::read (ss);
   REQUIRE (x.has_value ());
   auto &arr = std::get<djson::Array> (x->at ("arr"));
