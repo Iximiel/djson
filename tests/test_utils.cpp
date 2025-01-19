@@ -1,7 +1,7 @@
 //(c) 2025 Daniele Rapetti
 // This code is licensed under MIT license (see LICENSE for details)
 
-#include "utils.hpp"
+#include "djson/utils.hpp"
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators.hpp>
 

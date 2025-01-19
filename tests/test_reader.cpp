@@ -1,6 +1,6 @@
 //(c) 2025 Daniele Rapetti
 // This code is licensed under MIT license (see LICENSE for details)
-#include "json_read.hpp"
+#include "djson/json_read.hpp"
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>

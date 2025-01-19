@@ -1,7 +1,7 @@
 //(c) 2025 Daniele Rapetti
 // This code is licensed under MIT license (see LICENSE for details)
 
-#include "json_write.hpp"
+#include "djson/json_write.hpp"
 
 #include "catch2/catch_test_macros.hpp"
 #include <sstream>
