@@ -38,9 +38,10 @@ TEST_CASE ("Reading an Object with spaces", "[read]") {
 }
 
 TEST_CASE ("Reading an Object within an object", "[read]") {
-  std::stringstream ss (
-    "\t\r\n "
-    R"(  {"num":1,"bool":false,"string":"hello","thenull":null,"obj":{"num":1,"bool":false,"string":"hello","thenull":null}})");
+  std::stringstream ss ("\t\r\n "
+                        R"(  {"num":1,"bool":false,"string":"hello",
+    "obj":{"num":1,"bool":false,"string":"hello","thenull":null},
+    "thenull":null})");
   auto x = djson::read (ss);
   REQUIRE (x.has_value ());
   REQUIRE (std::get<djson::Number> (x->at ("num")) == Catch::Approx (1));
@@ -57,11 +58,11 @@ TEST_CASE ("Reading an Object within an object", "[read]") {
 
 TEST_CASE ("Reading an Array within an object", "[read]") {
   std::stringstream ss (
-
     R"(  {"arr":[false, "ciao" ,
     null ,3, {
         "in":"side"
-        }]})");
+        }
+        ]})");
   auto x = djson::read (ss);
   REQUIRE (x.has_value ());
   auto &arr = std::get<djson::Array> (x->at ("arr"));
@@ -72,4 +73,22 @@ TEST_CASE ("Reading an Array within an object", "[read]") {
   REQUIRE (
     std::get<djson::String> (std::get<djson::Object> (arr[4]).at ("in")) ==
     "side");
+}
+
+TEST_CASE ("Reading a simple Array", "[read]") {
+  std::stringstream ss (R"({
+  "array": [
+        1,
+        2,
+        3    
+        ],
+        "null": null
+  }
+   )");
+  auto x = djson::read (ss);
+  REQUIRE (x.has_value ());
+  auto &arr = std::get<djson::Array> (x->at ("array"));
+  for (size_t i = 0; i < arr.size (); i++) {
+    REQUIRE (std::get<djson::Number> (arr[i]) == Catch::Approx (i + 1));
+  }
 }
