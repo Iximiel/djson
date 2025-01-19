@@ -34,12 +34,9 @@ namespace djson {
   }
 
   std::optional<Object> read (std::istream &in) {
-    if (auto myobj = internal::reader<Object> (in); myobj.has_value ()) {
-      return std::move (*myobj);
-    } else {
-      return std::nullopt;
-    }
+    return internal::reader<Object> (in);
   }
+
   namespace internal {
 
     char spaceEater (std::istream &in) {
