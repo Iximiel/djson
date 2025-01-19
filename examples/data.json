@@ -1,0 +1,15 @@
+{
+    "number": 15.6,
+    "string": "hello",
+    "bool": true,
+    "null": null,
+    "array": [
+        1,
+        2,
+        3
+    ],
+    "object": {
+        "another number": 42,
+        "another string": "hello again!"
+    }
+}

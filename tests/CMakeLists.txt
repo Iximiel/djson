@@ -31,10 +31,7 @@ endif()
 # These tests can use the Catch2-provided main
 add_executable(tests test_object.cpp test_array.cpp test_utils.cpp
                      test_reader.cpp test_writer.cpp)
-target_link_libraries(
-  tests
-  PRIVATE Catch2::Catch2WithMain
-  PUBLIC Djson::Djson)
+target_link_libraries(tests PRIVATE Catch2::Catch2WithMain Djson::Djson)
 
 enable_testing()
 
