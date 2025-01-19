@@ -30,6 +30,14 @@ if(${OPT_DEBUGWARNINGS})
   endif()
 endif()
 
+if(${OPT_ERRORWARNINGS})
+  if(MSVC)
+    add_compile_options(/WX)
+  else()
+    add_compile_options(-Werror)
+  endif()
+endif()
+
 add_library(DJSON json.cpp json_read.cpp utils.cpp json_write.cpp)
 
 target_include_directories(

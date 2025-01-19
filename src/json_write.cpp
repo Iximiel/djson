@@ -49,7 +49,7 @@ namespace djson {
     void operator() (const Number &node) { out << node; }
     void operator() (const String &node) { out << "\"" << node << "\""; }
     void operator() (const Boolean &node) { out << (node ? "true" : "false"); }
-    void operator() (const Null &node) { out << "null"; }
+    void operator() (const Null &) { out << "null"; }
   };
 
   auto write (std::ostream &out, const Object &node, const std::string &indent)

@@ -13,6 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 option(BUILD_TESTING "build tests" OFF)
 option(OPT_DEBUGWARNINGS "Some extra warning for debugging" OFF)
+option(OPT_ERRORWARNINGS "Blocks compilation on warnings" OFF)
 
 add_subdirectory(src)
 

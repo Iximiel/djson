@@ -30,7 +30,7 @@ namespace djson {
   char spaceEater (std::istream &in) {
     char c;
     do {
-      c = in.get ();
+      c = static_cast<char> (in.get ());
     } while (std::isspace (static_cast<unsigned char> (c)));
     return c;
   }
@@ -121,12 +121,12 @@ namespace djson {
         /// @todo: please no comma in the value
         std::getline (in, rawValue, ',');
         in.unget ();
-        if (char c = in.peek (); c != ',') {
+        if (char c = static_cast<char> (in.peek ()); c != ',') {
           // no comma found, go back and go for the parentesis
           in.seekg (redo);
           std::getline (in, rawValue, '}');
           in.unget ();
-          if (char c = in.peek (); c != '}') {
+          if (c = static_cast<char> (in.peek ()); c != '}') {
             std::cerr << "cannot find the \"}\" after value " << rawValue
                       << std::endl;
             return std::nullopt;
@@ -194,12 +194,12 @@ namespace djson {
         /// @todo: please no comma in the value
         std::getline (in, rawValue, ',');
         in.unget ();
-        if (char c = in.peek (); c != ',') {
+        if (char c = static_cast<char> (in.peek ()); c != ',') {
           // no comma found, go back and go for the parentesis
           in.seekg (redo);
           std::getline (in, rawValue, ']');
           in.unget ();
-          if (char c = in.peek (); c != ']') {
+          if (c = static_cast<char> (in.peek ()); c != ']') {
             std::cerr << "cannot find the \"}\" after value " << rawValue
                       << std::endl;
             return std::nullopt;

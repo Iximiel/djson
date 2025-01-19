@@ -5,6 +5,8 @@
 # enable FetchContent to get Catch2
 include(FetchContent)
 
+# todo: not download if found
+
 # declare Catch2
 FetchContent_Declare(
   Catch2 # name of the content
