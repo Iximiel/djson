@@ -13,6 +13,9 @@ namespace djson {
     return objects[key];
   }
   Node &Object::at (const std::string &key) { return objects.at (key); }
+  const Node &Object::at (const std::string &key) const {
+    return objects.at (key);
+  }
 
   bool Object::operator== (const Object &other) const {
     // I am also cheking that the keys are in the same order
@@ -30,5 +33,6 @@ namespace djson {
   bool Object::operator!= (const Object &other) const {
     return !(*this == other);
   }
+  const std::vector<std::string> &Object::Keys () const { return orderedKeys; }
 
 } // namespace djson

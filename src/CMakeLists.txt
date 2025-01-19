@@ -30,7 +30,7 @@ if(${OPT_DEBUGWARNINGS})
   endif()
 endif()
 
-add_library(DJSON json.cpp json_read.cpp utils.cpp)
+add_library(DJSON json.cpp json_read.cpp utils.cpp json_write.cpp)
 
 target_include_directories(
   DJSON PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)

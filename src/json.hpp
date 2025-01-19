@@ -37,8 +37,20 @@ namespace djson {
   public:
     Node &operator[] (const std::string &key);
     Node &at (const std::string &key);
+    const Node &at (const std::string &key) const;
     bool operator== (const Object &other) const;
     bool operator!= (const Object &other) const;
+    /// return sthe keys in order of declation
+    const std::vector<std::string> &Keys () const;
+    template <typename T>
+    T get (const std::string &key) const {
+      return std::get<T> (objects.at (key));
+    }
+    /// assigns the value to the argument, it deduces the type
+    template <typename T>
+    void get (const std::string &key, T &value) const {
+      value = std::get<T> (objects.at (key));
+    }
   };
   //   void operator= (std::ostream &os, const Node &node);
 
