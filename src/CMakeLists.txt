@@ -68,6 +68,13 @@ install(
   INCLUDES
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
+install(
+  FILES ${CMAKE_CURRENT_SOURCE_DIR}/djson/json.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/djson/json_read.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/djson/json_write.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/djson/utils.hpp
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/djson)
+
 include(CMakePackageConfigHelpers)
 
 write_basic_package_version_file(
