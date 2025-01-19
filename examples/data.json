@@ -5,7 +5,9 @@
     "null": null,
     "array": [
         1,
-        2,
+        {
+            "false": false
+        },
         3
     ],
     "object": {

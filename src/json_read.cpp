@@ -187,21 +187,18 @@ namespace djson {
 
         std::string rawValue;
         auto redo = in.tellg ();
+        {
+          // gets until the comma or the end character
+          // maybe I should look for something more faster
+          char c = static_cast<char> (in.get ());
+          while ((c != ',' && c != close<T>) && !in.eof ()) {
+            rawValue += c;
+            c = static_cast<char> (in.get ());
+          }
+          in.unget ();
+        }
         // gets until the comma
         /// @todo: please no comma in the value
-        std::getline (in, rawValue, ',');
-        in.unget ();
-        if (char c = static_cast<char> (in.peek ()); c != ',') {
-          // no comma found, go back and go for the parentesis
-          in.seekg (redo);
-          std::getline (in, rawValue, close<T>);
-          in.unget ();
-          if (c = static_cast<char> (in.peek ()); c != close<T>) {
-            std::cerr << "cannot find the \"" << close<T> << "\" after value "
-                      << rawValue << std::endl;
-            return std::nullopt;
-          }
-        }
         trim (rawValue);
         if (std::regex_match (rawValue, valueRegex)) {
           if (auto node = strtonode (rawValue); node.has_value ()) {
