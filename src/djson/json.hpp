@@ -26,7 +26,16 @@ namespace djson {
   using Node = std::variant<Number, String, Boolean, Null, Array, Object>;
   // I do not 100% like this
   /// A ordered list enclosed by square brackets
-  struct Array : public std::vector<Node> {};
+  struct Array : public std::vector<Node> {
+    template <typename T>
+    const T &get (std::vector<Node>::size_type key) const {
+      return std::get<T> (this->operator[] (key));
+    }
+    template <typename T>
+    T &get (std::vector<Node>::size_type key) {
+      return std::get<T> (this->operator[] (key));
+    }
+  };
   /// @brief A object enclosed by curly brackets (that contains named values)
   class Object {
     // I want to keep the order or the keys
@@ -43,7 +52,11 @@ namespace djson {
     /// return sthe keys in order of declation
     const std::vector<std::string> &Keys () const;
     template <typename T>
-    T get (const std::string &key) const {
+    const T &get (const std::string &key) const {
+      return std::get<T> (objects.at (key));
+    }
+    template <typename T>
+    T &get (const std::string &key) {
       return std::get<T> (objects.at (key));
     }
     /// assigns the value to the argument, it deduces the type
