@@ -79,3 +79,12 @@ TEST_CASE ("Test Inequality", "[crude]") {
   y["inside"] = inside;
   REQUIRE (x != y);
 }
+
+TEST_CASE ("Set with get", "[crude]") {
+  djson::Object obj;
+
+  obj["num"] = djson::Number (1);
+  REQUIRE (std::get<djson::Number> (obj["num"]) == Catch::Approx (1));
+  obj.get<djson::Number> ("num") = djson::Number (2);
+  REQUIRE (std::get<djson::Number> (obj["num"]) == Catch::Approx (2));
+}
